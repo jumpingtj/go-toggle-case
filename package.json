@@ -3,6 +3,7 @@
   "displayName": "Go Toggle Case",
   "description": "Toggles whether the name under cursor acts as exported or unexported (capitalized or lowercase)",
   "version": "0.0.1",
+  "repository": "https:/github.com/jumpingtj/go-toggle-case",
   "engines": {
     "vscode": "^1.50.0"
   },
