@@ -17,7 +17,7 @@
     "commands": [
       {
         "command": "go-toggle-case.toggleExported",
-        "title": "Toggle Exported/Unexported"
+        "title": "Go Toggle Case: Toggle Case"
       }
     ]
   },
