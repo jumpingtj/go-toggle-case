@@ -1,71 +1,55 @@
-# go-toggle-case README
+# Go Toggle Case Extension
 
-This is the README for your extension "go-toggle-case". After writing up a brief description, we recommend including the following sections.
+This VSCode extension helps you quickly switch between **Exported** and **Unexported** Go variable or function names by toggling their case. It's perfect for Go developers who want to easily convert between capitalized (exported) and lowercase (unexported) identifiers.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Toggle Exported/Unexported**: Switch the case of a Go function or variable name from **Exported** (like `MyFunction`) to **Unexported** (like `myFunction`), or vice versa.
+- **Automatic Rename**: The extension automatically renames the symbol throughout your document—just like using VSCode's "Rename Symbol" feature (F2).
+- **Effortless**: No need to manually change the case—just place your cursor on the symbol and let the extension do the work!
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+**Install from VSCode Marketplace**:
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- Search for **Go Toggle Case** in the [VSCode Marketplace](https://marketplace.visualstudio.com/) and click **Install**.
+
+## How to Use
+
+1. **Toggle Exported/Unexported**:
+   - Place your cursor on the Go function or variable you want to toggle.
+   - Open the **Command Palette** (`Cmd+Shift+P` or `Ctrl+Shift+P`), search for **"Toggle Exported/Unexported"**, and select it. The extension will toggle the case for you.
+2. **Keyboard Shortcut** (Optional):
+   - You can set a keyboard shortcut to make it even easier to toggle the case. For example, add this to your **keybindings.json**:
+     ```json
+     [
+       {
+         "key": "ctrl+alt+t",
+         "command": "go-toggle-case.toggleExported",
+         "when": "editorTextFocus"
+       }
+     ]
+     ```
+   - Now you can press `Ctrl+Alt+T` to toggle the case instantly.
+
+## How It Works
+
+- The extension looks at the word under your cursor.
+- It toggles the **first letter's case**: if the word is **capitalized** (like `MyFunction`), it will turn it **lowercase** (like `myFunction`), and vice versa.
+- It then automatically applies the change throughout the entire document—no need for confirmation or pressing **Enter**!
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- **VSCode 1.60+**: This extension requires VSCode version 1.60 or later.
+- **Go Support**: It works best when you have the Go extension for VSCode installed.
 
-## Extension Settings
+## Contributing
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+If you'd like to help improve this extension, feel free to contribute! You can:
 
-For example:
+- Open issues to report bugs or suggest features.
+- Submit pull requests with code improvements or fixes.
 
-This extension contributes the following settings:
+## License
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+This extension is open-source and available under the [MIT License](LICENSE).

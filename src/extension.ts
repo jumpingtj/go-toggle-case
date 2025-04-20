@@ -1,26 +1,64 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  console.log(
+    'Congratulations, your extension "go-toggle-case" is now active!'
+  );
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "go-toggle-case" is now active!');
+  const toggleExported = vscode.commands.registerCommand(
+    "go-toggle-case.toggleExported",
+    async () => {
+      // Get the current editor and cursor position
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) {
+        return vscode.window.showErrorMessage("No active editor found.");
+      }
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('go-toggle-case.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from go-toggle-case!');
-	});
+      const document = editor.document;
+      const position = editor.selection.active;
 
-	context.subscriptions.push(disposable);
+      // Get the word under the cursor
+      const wordRange = document.getWordRangeAtPosition(position);
+      if (!wordRange) {
+        return vscode.window.showErrorMessage("No word found at the cursor.");
+      }
+
+      const word = document.getText(wordRange);
+      const toggledWord = toggleFirstCharCase(word);
+
+      // Trigger the rename action (F2-style) and provide the toggled name directly
+      await vscode.commands.executeCommand("editor.action.rename");
+
+      // After triggering rename, we use the workspace API to replace the symbol across the document with the new name
+      const edit = new vscode.WorkspaceEdit();
+      edit.replace(document.uri, wordRange, toggledWord);
+      await vscode.workspace.applyEdit(edit);
+
+      // Provide feedback to the user
+      vscode.window.showInformationMessage(
+        `Renamed '${word}' to '${toggledWord}'`
+      );
+    }
+  );
+
+  context.subscriptions.push(toggleExported);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
+
+// Helper function to toggle the first character's case
+function toggleFirstCharCase(word: string): string {
+  if (!word) {
+    return word;
+  }
+
+  const firstChar = word[0];
+  const rest = word.slice(1);
+
+  // Toggle case of the first character
+  if (firstChar === firstChar.toUpperCase()) {
+    return firstChar.toLowerCase() + rest;
+  } else {
+    return firstChar.toUpperCase() + rest;
+  }
+}
